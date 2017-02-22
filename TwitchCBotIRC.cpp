@@ -40,6 +40,7 @@ using namespace std;
 
 static const string SERVER = "irc.chat.twitch.tv";
 static const string PORT = "6667";
+bool isConnected;
 
 struct to_lower
 {
@@ -111,6 +112,7 @@ void TwitchCBotIRC::start()
         perror("-- TwitchCBot Disconnected.");
         abort();
     }
+	isConnected = true;
 
     //Free up some memory as we are now connected to the server, no need for serverInfo data anymore
     freeaddrinfo(serverInfo);
@@ -124,7 +126,8 @@ void TwitchCBotIRC::start()
     lastRun = systemClock.now();
 
     bool setUpComplete = false;
-    while (1) {
+	
+    while (isConnected) {
 
     	if (!setUpComplete)
     	{
@@ -167,10 +170,10 @@ void TwitchCBotIRC::start()
 
         //Break out of the while-loop if the connection to the server is lost
         if (readBytesCount <= 0)
-        {
+        {	
         	cout << "-- " + SERVER + " closed the connection."<< endl;
         	cout << timeNow() << endl;
-            break;
+			isConnected = false;
         }
     }
 }

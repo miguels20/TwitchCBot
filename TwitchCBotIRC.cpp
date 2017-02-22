@@ -40,7 +40,6 @@ using namespace std;
 
 static const string SERVER = "irc.chat.twitch.tv";
 static const string PORT = "6667";
-bool isConnected;
 
 struct to_lower
 {

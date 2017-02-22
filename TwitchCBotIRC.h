@@ -39,6 +39,8 @@ public:
 private:
     int commSocket;
     int sentDataCounter;
+    
+    bool isConnected;
 
     string nick;
     string pass;
